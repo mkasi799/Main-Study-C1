@@ -1,3 +1,4 @@
+
 const screen = document.getElementById("screen");
 
 let userStream = null;
@@ -516,9 +517,24 @@ function renderMeetingCompletePage() {
 
     document.getElementById("continueBtn").onclick = () => {
 
+        // Get the condition assigned by Qualtrics
+        const urlParameters = new URLSearchParams(window.location.search);
+        const condition = urlParameters.get("Condition");
+
+        // Survey 2 URL - replace this with your actual Qualtrics link
         const surveyTwoURL = "PASTE_SURVEY_2_LINK_HERE";
 
-        window.location.href = surveyTwoURL;
+        // Make sure the condition was successfully received
+        if (!condition) {
+            alert("Your study condition could not be retrieved. Please contact the researcher.");
+            return;
+        }
+
+        // Add the condition to the Survey 2 URL
+        const separator = surveyTwoURL.includes("?") ? "&" : "?";
+
+        window.location.href =
+            surveyTwoURL + separator + "Condition=" + encodeURIComponent(condition);
 
     };
 
