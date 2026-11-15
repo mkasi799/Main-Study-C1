@@ -522,7 +522,7 @@ function renderMeetingCompletePage() {
         const condition = urlParameters.get("Condition");
 
         // Survey 2 URL - replace this with your actual Qualtrics link
-        const surveyTwoURL = "PASTE_SURVEY_2_LINK_HERE";
+        const surveyTwoURL = "https://mtroyal.ca1.qualtrics.com/jfe/form/SV_eeYZBrtYNYWNx1c";
 
         // Make sure the condition was successfully received
         if (!condition) {
