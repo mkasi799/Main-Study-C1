@@ -305,10 +305,17 @@ function startStudy() {
 
             <div class="meeting-room">
 
+                <!-- UPPER LEFT: JOINS AT 8 SECONDS -->
+
                 <div class="video-box">
 
-                    <video autoplay loop muted playsinline preload="auto">
-                        <source src="p1.mp4" type="video/mp4">
+                    <video
+                        id="upperLeftVideo"
+                        autoplay
+                        loop
+                        muted
+                        playsinline
+                        preload="none">
                     </video>
 
                     <div class="mic-overlay">
@@ -318,10 +325,17 @@ function startStudy() {
                 </div>
 
 
+                <!-- UPPER RIGHT: JOINS IMMEDIATELY -->
+
                 <div class="video-box">
 
-                    <video autoplay loop muted playsinline preload="auto">
-                        <source src="control_clip.mp4" type="video/mp4">
+                    <video
+                        id="upperRightVideo"
+                        autoplay
+                        loop
+                        muted
+                        playsinline
+                        preload="auto">
                     </video>
 
                     <div class="mic-overlay" id="speakerMic">
@@ -331,10 +345,17 @@ function startStudy() {
                 </div>
 
 
+                <!-- BOTTOM LEFT: JOINS AT 5 SECONDS -->
+
                 <div class="video-box">
 
-                    <video autoplay loop muted playsinline preload="auto">
-                        <source src="p3.mp4" type="video/mp4">
+                    <video
+                        id="bottomLeftVideo"
+                        autoplay
+                        loop
+                        muted
+                        playsinline
+                        preload="none">
                     </video>
 
                     <div class="mic-overlay">
@@ -401,6 +422,56 @@ function startStudy() {
 
         </div>
     `;
+
+
+    /* =========================
+       VIDEO JOIN TIMING
+    ========================= */
+
+    // UPPER RIGHT VIDEO
+    // Joins immediately when the meeting begins
+
+    const upperRightVideo = document.getElementById("upperRightVideo");
+
+    upperRightVideo.src = "control_clip.mp4";
+    upperRightVideo.load();
+    upperRightVideo.play().catch(() => {});
+
+
+    // BOTTOM LEFT VIDEO
+    // Joins 5 seconds after the meeting begins
+
+    setTimeout(() => {
+
+        const bottomLeftVideo = document.getElementById("bottomLeftVideo");
+
+        if (bottomLeftVideo) {
+
+            bottomLeftVideo.src = "p3.mp4";
+            bottomLeftVideo.load();
+            bottomLeftVideo.play().catch(() => {});
+
+        }
+
+    }, 5000);
+
+
+    // UPPER LEFT VIDEO
+    // Joins 8 seconds after the meeting begins
+
+    setTimeout(() => {
+
+        const upperLeftVideo = document.getElementById("upperLeftVideo");
+
+        if (upperLeftVideo) {
+
+            upperLeftVideo.src = "p1.mp4";
+            upperLeftVideo.load();
+            upperLeftVideo.play().catch(() => {});
+
+        }
+
+    }, 8000);
 
 
     /* =========================
@@ -553,7 +624,7 @@ function renderMeetingCompletePage() {
         const urlParameters = new URLSearchParams(window.location.search);
         const condition = urlParameters.get("Condition");
 
-        // Survey 2 URL - replace this with your actual Qualtrics link
+        // Survey 2 URL
         const surveyTwoURL = "https://mtroyal.ca1.qualtrics.com/jfe/form/SV_eeYZBrtYNYWNx1c";
 
         // Make sure the condition was successfully received
