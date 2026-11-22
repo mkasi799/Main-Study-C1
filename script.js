@@ -1,4 +1,3 @@
-
 const screen = document.getElementById("screen");
 
 let userStream = null;
@@ -305,7 +304,7 @@ function startStudy() {
 
             <div class="meeting-room">
 
-                <!-- UPPER LEFT: JOINS AT 8 SECONDS -->
+                <!-- UPPER LEFT: JOINS AT 15 SECONDS -->
 
                 <div class="video-box">
 
@@ -318,7 +317,7 @@ function startStudy() {
                         preload="none">
                     </video>
 
-                    <div class="mic-overlay">
+                    <div class="mic-overlay" id="upperLeftMic" style="display: none;">
                         <img src="mic-muted.svg" alt="Microphone muted">
                     </div>
 
@@ -345,7 +344,7 @@ function startStudy() {
                 </div>
 
 
-                <!-- BOTTOM LEFT: JOINS AT 5 SECONDS -->
+                <!-- BOTTOM LEFT: JOINS AT 8 SECONDS -->
 
                 <div class="video-box">
 
@@ -358,7 +357,7 @@ function startStudy() {
                         preload="none">
                     </video>
 
-                    <div class="mic-overlay">
+                    <div class="mic-overlay" id="bottomLeftMic" style="display: none;">
                         <img src="mic-muted.svg" alt="Microphone muted">
                     </div>
 
@@ -439,7 +438,7 @@ function startStudy() {
 
 
     // BOTTOM LEFT VIDEO
-    // Joins 5 seconds after the meeting begins
+    // Joins 8 seconds after the meeting begins
 
     setTimeout(() => {
 
@@ -447,17 +446,26 @@ function startStudy() {
 
         if (bottomLeftVideo) {
 
+            const bottomLeftMic = document.getElementById("bottomLeftMic");
+
+            // Show microphone icon only after the first video frame loads
+            bottomLeftVideo.addEventListener("loadeddata", () => {
+                if (bottomLeftMic) {
+                    bottomLeftMic.style.display = "flex";
+                }
+            }, { once: true });
+
             bottomLeftVideo.src = "p3.mp4";
             bottomLeftVideo.load();
             bottomLeftVideo.play().catch(() => {});
 
         }
 
-    }, 5000);
+    }, 8000);
 
 
     // UPPER LEFT VIDEO
-    // Joins 8 seconds after the meeting begins
+    // Joins 15 seconds after the meeting begins
 
     setTimeout(() => {
 
@@ -465,13 +473,22 @@ function startStudy() {
 
         if (upperLeftVideo) {
 
+            const upperLeftMic = document.getElementById("upperLeftMic");
+
+            // Show microphone icon only after the first video frame loads
+            upperLeftVideo.addEventListener("loadeddata", () => {
+                if (upperLeftMic) {
+                    upperLeftMic.style.display = "flex";
+                }
+            }, { once: true });
+
             upperLeftVideo.src = "p1.mp4";
             upperLeftVideo.load();
             upperLeftVideo.play().catch(() => {});
 
         }
 
-    }, 8000);
+    }, 15000);
 
 
     /* =========================
@@ -649,3 +666,4 @@ function renderMeetingCompletePage() {
 ========================= */
 
 renderIntro();
+
