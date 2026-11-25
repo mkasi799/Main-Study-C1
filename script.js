@@ -417,7 +417,7 @@ function startStudy() {
                         class="icon"
                         alt="Participants">
 
-                    <span>Participants (5)</span>
+                    <span id="participantCount">Participants (2)</span>
 
                 </div>
 
@@ -446,6 +446,12 @@ function startStudy() {
 
     setTimeout(() => {
 
+        // Update participant count when the 8-second tile appears
+        const participantCount = document.getElementById("participantCount");
+        if (participantCount) {
+            participantCount.innerText = "Participants (3)";
+        }
+
         const bottomLeftVideo = document.getElementById("bottomLeftVideo");
 
         if (bottomLeftVideo) {
@@ -472,6 +478,12 @@ function startStudy() {
     // Joins 15 seconds after the meeting begins
 
     setTimeout(() => {
+
+        // Update participant count when the 15-second tile appears
+        const participantCount = document.getElementById("participantCount");
+        if (participantCount) {
+            participantCount.innerText = "Participants (4)";
+        }
 
         const upperLeftVideo = document.getElementById("upperLeftVideo");
 
@@ -640,3 +652,4 @@ function renderMeetingCompletePage() {
 ========================= */
 
 renderIntro();
+
