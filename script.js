@@ -1,3 +1,4 @@
+
 const screen = document.getElementById("screen");
 
 let userStream = null;
@@ -290,6 +291,9 @@ async function renderDeviceCheck() {
 
 function startStudy() {
 
+    // Start the 80-second meeting timer as soon as the participant joins.
+    const meetingStartTime = Date.now();
+
     screen.innerHTML = `
         <div class="meeting-interface">
 
@@ -448,7 +452,7 @@ function startStudy() {
 
             const bottomLeftMic = document.getElementById("bottomLeftMic");
 
-            // Show microphone icon only after the first video frame loads
+            // Show muted microphone icon when the video loads
             bottomLeftVideo.addEventListener("loadeddata", () => {
                 if (bottomLeftMic) {
                     bottomLeftMic.style.display = "flex";
@@ -475,7 +479,7 @@ function startStudy() {
 
             const upperLeftMic = document.getElementById("upperLeftMic");
 
-            // Show microphone icon only after the first video frame loads
+            // Show muted microphone icon when the video loads
             upperLeftVideo.addEventListener("loadeddata", () => {
                 if (upperLeftMic) {
                     upperLeftMic.style.display = "flex";
@@ -523,7 +527,6 @@ function startStudy() {
             muteIcon.alt = "Microphone muted";
             muteText.innerText = "Unmute";
 
-            // Show muted status in the participant's video tile too
             if (selfMicIcon) {
                 selfMicIcon.src = "mic-muted.svg";
                 selfMicIcon.alt = "Microphone muted";
@@ -535,7 +538,6 @@ function startStudy() {
             muteIcon.alt = "Microphone on";
             muteText.innerText = "Mute";
 
-            // Show active status in the participant's video tile too
             if (selfMicIcon) {
                 selfMicIcon.src = "mic.svg";
                 selfMicIcon.alt = "Microphone on";
@@ -563,48 +565,20 @@ function startStudy() {
 
 
     /* =========================
-       SPEAKER MICROPHONE TIMING
-    ========================= */
-
-    // Hide speaker microphone at 40 seconds
-
-    setTimeout(() => {
-
-        const speakerMic = document.getElementById("speakerMic");
-
-        if (speakerMic) {
-            speakerMic.style.display = "none";
-        }
-
-    }, 40000);
-
-
-    // Show speaker microphone again at 55 seconds
-    // Use flex to keep the icon centered
-
-    setTimeout(() => {
-
-        const speakerMic = document.getElementById("speakerMic");
-
-        if (speakerMic) {
-            speakerMic.style.display = "flex";
-        }
-
-    }, 55000);
-
-
-    /* =========================
        MEETING END
-       Separate page appears at
-       57 seconds.
+       The meeting lasts 1 minute
+       and 20 seconds from the
+       moment the participant joins.
     ========================= */
+
+    const meetingElapsed = Date.now() - meetingStartTime;
+    const remainingMeetingTime = Math.max(0, 80000 - meetingElapsed);
 
     setTimeout(() => {
 
         renderMeetingCompletePage();
 
-    }, 57000);
-
+    }, remainingMeetingTime);
 }
 
 
@@ -666,4 +640,3 @@ function renderMeetingCompletePage() {
 ========================= */
 
 renderIntro();
-
